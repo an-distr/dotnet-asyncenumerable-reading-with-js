@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Reading the AsyncEnumerable with JavaScript</title>
+
+<style>
+  #tblPosts {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  #tblPosts th {
+    border: 1px solid black;
+  }
+
+  #tblPosts tbody {
+    border: 1px solid black;
+  }
+
+  #tblPosts td {
+    border-left: 1px solid black;
+  }
+</style>
+
+<script type="module">
+  import * as streams from "https://an-js-streams.pages.dev/mod.mjs"
+  import * as funcs from "https://an-js-streams.pages.dev/funcs/mod.mjs"
+
+  (async () => {
+
+    const txtCount = document.getElementById("txtCount")
+    const tblPosts = document.getElementById("tblPosts")
+
+    const url = new URL("/api/posts", location.href)
+    const response = await fetch(url)
+    const stream = response.body
+    if (!stream) {
+      alert(`fetch(${url.href}) failed.`)
+      return
+    }
+
+    const posts = stream
+      .pipeThrough(new TextDecoderStream)
+      .pipeThrough(new streams.JsonDeserializerStream())
+      .pipeThrough(new streams.PeekStream((_, i) => txtCount.textContent = `${(i + 1).toLocaleString()} (Fetching)`))
+
+    for await (const post of funcs.toAsyncIterableIterator(posts)) {
+      const row = tblPosts.tBodies[0].insertRow(-1)
+      row.insertCell(-1).textContent = post.userID
+      row.insertCell(-1).textContent = post.id
+      row.insertCell(-1).textContent = post.title
+      row.insertCell(-1).textContent = post.body
+    }
+
+    txtCount.textContent = txtCount.textContent.slice(0, -"(Fetching)".length) + "(Done)"
+
+  })()
+</script>
+
+<h4>Reading the AsyncEnumerable with JavaScript</h4>
+
+<p>Posts: <span id="txtCount">0 (Starting)</span></p>
+
+<table id="tblPosts">
+  <thead>
+    <tr>
+      <th>User ID
+      <th>ID
+      <th>Title
+      <th>Body
+    </tr>
+  </thead>
+  <tbody>
+</table>
