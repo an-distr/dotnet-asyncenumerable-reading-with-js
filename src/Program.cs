@@ -31,11 +31,14 @@ builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
   options.Level = CompressionLevel.Fastest;
 });
 
+builder.Services.AddResponseCaching();
+
 var app = builder.Build();
 
 app.UseHttpLogging();
 app.UseStaticFiles();
 app.UseResponseCompression();
+app.UseResponseCaching();
 
 var api = app.MapGroup("/api");
 {
