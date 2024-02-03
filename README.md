@@ -18,13 +18,13 @@ Example for reading the AsyncEnumerable with JavaScript.
 1. [Converting response stream to text stream.](src/wwwroot/index.html#L43)
 
 1. [Converting text stream to JSON array stream.](src/wwwroot/index.html#L44)<br>
-  [JsonDeserializer](https://github.com/an-dist/js-streams/blob/latest/JsonDeserializer/README.md) is accumulating and converting a character stream to a JSON array.<br>
+  [JsonDeserializer](https://github.com/an-dist/js-streams/blob/latest/dist/JsonDeserializer/README.md) is accumulating and converting a character stream to a JSON array.<br>
   You don't necessarily need to use "JsonDeserializer". But  "AsyncEnumerable" returns a partial response, but it is not necessarily separated by a delimited as JSON. So, if you want to process it yourself, be careful about character separation.
 
 1. It's not required, but I'm [counting the number of converted JSON objects](src/wwwroot/index.html#L45).
 
 1. [Converting JSON array stream to AsyncIterableIterator.](src/wwwroot/index.html#L47)<br>
-  [toAsyncIterableIterator](https://github.com/an-dist/js-streams/blob/latest/funcs/toAsyncIterableIterator/README.md) is read a stream and convert to AsyncIterableIterator.<br>
+  [toAsyncIterableIterator](https://github.com/an-dist/js-streams/blob/latest/dist/funcs/toAsyncIterableIterator/README.md) is read a stream and convert to AsyncIterableIterator.<br>
   You don't necessarily need to use "toAsyncIterableIterator". You can use "WritableStream" instead.
 
 1. Use to [for await...of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) statement.

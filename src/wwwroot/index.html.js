@@ -1,5 +1,4 @@
-import * as streams from "https://an-js-streams.pages.dev/mod.js"
-import * as funcs from "https://an-js-streams.pages.dev/funcs/mod.js"
+import * as streams from "https://an-js-streams.pages.dev/web.js"
 
 (async () => {
 
@@ -19,7 +18,7 @@ import * as funcs from "https://an-js-streams.pages.dev/funcs/mod.js"
     .pipeThrough(new streams.JsonDeserializer().transform())
     .pipeThrough(new streams.PeekStream((_, i) => txtCount.textContent = `${(i + 1).toLocaleString()} (Fetching)`))
 
-  for await (const post of funcs.toAsyncIterableIterator(posts)) {
+  for await (const post of streams.toAsyncIterableIterator(posts)) {
     const row = tblPosts.tBodies[0].insertRow(-1)
     row.insertCell(-1).textContent = post.userID
     row.insertCell(-1).textContent = post.id
