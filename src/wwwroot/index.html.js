@@ -1,4 +1,4 @@
-import * as streams from "https://an-js-streams.pages.dev/web.js"
+import * as streams from "https://an-js-streams.pages.dev/mod.min.js"
 
 (async () => {
 
@@ -7,13 +7,12 @@ import * as streams from "https://an-js-streams.pages.dev/web.js"
 
   const url = new URL("/api/posts", location.href)
   const response = await fetch(url)
-  const stream = response.body
-  if (!stream) {
+  if (!response.ok) {
     alert(`fetch(${url.href}) failed.`)
     return
   }
 
-  const posts = stream
+  const posts = response.body
     .pipeThrough(new streams.Utf8DecoderStream())
     .pipeThrough(new streams.JsonDeserializer().transform())
     .pipeThrough(new streams.PeekStream((_, i) => txtCount.textContent = `${(i + 1).toLocaleString()} (Fetching)`))
