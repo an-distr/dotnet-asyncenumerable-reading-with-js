@@ -13,18 +13,18 @@ Example for reading the AsyncEnumerable with JavaScript.
 ## Process flow
 1. On the server side, we will implement an API that allows you to get a JSON array with AsyncEnumerable. (e.g. [/api/posts](src/Program.cs#L45))
 
-1. On the client side, [fetch](src/wwwroot/index.html.js#L9) retrieves the JSON array from the API.
+1. On the client side, [fetch](src/wwwroot/index.html.js#L7) retrieves the JSON array from the API.
 
-1. [Converting response stream to text stream.](src/wwwroot/index.html.js#L16)
+1. [Converting response stream to text stream.](src/wwwroot/index.html.js#L13)
 
-1. [Converting text stream to JSON array stream.](src/wwwroot/index.html.js#L17)<br>
+1. [Converting text stream to JSON array stream.](src/wwwroot/index.html.js#L14)<br>
   [JsonDeserializer](https://github.com/an-dist/js-streams/blob/latest/dist/JsonDeserializer/README.md) is accumulating and converting a character stream to a JSON array.<br>
   You don't necessarily need to use "JsonDeserializer". But  "AsyncEnumerable" returns a partial response, but it is not necessarily separated by a delimited as JSON. So, if you want to process it yourself, be careful about character separation.
 
-1. It's not required, but I'm [counting the number of converted JSON objects](src/wwwroot/index.html.js#L18).
+1. It's not required, but I'm [counting the number of converted JSON objects](src/wwwroot/index.html.js#L15).
 
-1. [Converting JSON array stream to AsyncIterableIterator.](src/wwwroot/index.html.js#L20)<br>
-  [ReadableStream.asyncIterator](https://github.com/an-dist/js-streams/blob/latest/dist/polyfill/ReadableStream.asyncIterator/README.md) is read a stream and convert to AsyncIterableIterator.<br>
+1. [Iterating JSON array stream.](src/wwwroot/index.html.js#L17)<br>
+  [ReadableStream.asyncIterator](https://github.com/an-dist/js-streams/blob/latest/dist/polyfill/ReadableStream.asyncIterator/README.md) is polyfill Symbol.asyncIterator to ReadableStream.<br>
   You don't necessarily need to use "ReadableStream.asyncIterator". You can use "WritableStream" instead.
 
 1. Use to [for await...of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) statement.
