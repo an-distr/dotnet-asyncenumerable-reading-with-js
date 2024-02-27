@@ -24,8 +24,8 @@ Example for reading the AsyncEnumerable with JavaScript.
 1. It's not required, but I'm [counting the number of converted JSON objects](src/wwwroot/index.html.js#L18).
 
 1. [Converting JSON array stream to AsyncIterableIterator.](src/wwwroot/index.html.js#L20)<br>
-  [toAsyncIterableIterator](https://github.com/an-dist/js-streams/blob/latest/dist/funcs/toAsyncIterableIterator/README.md) is read a stream and convert to AsyncIterableIterator.<br>
-  You don't necessarily need to use "toAsyncIterableIterator". You can use "WritableStream" instead.
+  [ReadableStream.asyncIterator](https://github.com/an-dist/js-streams/blob/latest/dist/polyfill/ReadableStream.asyncIterator/README.md) is read a stream and convert to AsyncIterableIterator.<br>
+  You don't necessarily need to use "ReadableStream.asyncIterator". You can use "WritableStream" instead.
 
 1. Use to [for await...of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) statement.
 
